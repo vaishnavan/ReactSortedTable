@@ -8,6 +8,8 @@ class App extends React.Component {
   
     this.state = {
        userdata:[],
+       show:false,
+       updateValue:'waiting...',
     }
   }
 
@@ -21,31 +23,93 @@ class App extends React.Component {
   }
 
   getData = (order) => {
+    this.setState({
+      show:!this.state.show,
+      updateValue:"username"
+    })
     switch(order){
-      case 'asc': return this.setState({userdata : this.state.userdata.sort((a,b)=> a.username > b.username ? 1:-1) })
+      case 'asc': return this.setState({userdata : this.state.userdata.sort((a,b)=> a.username > b.username ? 1:-1)})
 
       case 'desc' : return this.setState({userdata : this.state.userdata.sort((a,b) => a.username < b.username ? 1:-1)})
+
+      default: return 1;
     }
+    
   }
+  sortMail = (order) => {
+    this.setState({
+      show:!this.state.show,
+      updateValue:"email"
+    })
+    switch(order){
+      case 'asc': return this.setState({userdata : this.state.userdata.sort((a,b)=> a.email > b.email ? 1:-1)})
+
+      case 'desc' : return this.setState({userdata : this.state.userdata.sort((a,b) => a.email < b.email ? 1:-1)})
+
+      default: return 1;
+    }
+    
+  }
+
+  sortWeb = (order) => {
+    this.setState({
+      show:!this.state.show,
+      updateValue:"Website"
+    })
+    switch(order){
+      case 'asc': return this.setState({userdata : this.state.userdata.sort((a,b)=> a.website > b.website ? 1:-1)})
+
+      case 'desc' : return this.setState({userdata : this.state.userdata.sort((a,b) => a.website < b.website ? 1:-1)})
+
+      default: return 1;
+    }
+    
+  }
+
+  sortCity = (order) => {
+    this.setState({
+      show:!this.state.show,
+      updateValue:"city"
+    })
+    switch(order){
+      case 'asc': return this.setState({userdata : this.state.userdata.sort((a,b)=> a.address.city > b.address.city ? 1:-1)})
+
+      case 'desc' : return this.setState({userdata : this.state.userdata.sort((a,b) => a.address.city < b.address.city ? 1:-1)})
+
+      default: return 1;
+    }
+    
+  }
+
+  
   
   
   render() {
-    const {userdata } = this.state; 
+    const {userdata, show, updateValue} = this.state; 
     // console.log(userdata)
+    // var storeval;
+    // if(show){
+    //   storeval = 'asc'
+    // }else{
+    //   storeval = 'desc'
+    // }
 
     return (
       <div>
-        <button onClick={()=> this.getData('asc')} >Ascending</button>
-        <button onClick={()=> this.getData('desc')} >descending</button>
+        {/* <button onClick={()=> this.getData('asc')} >Ascending</button> */}
+        {/* <button onClick={()=> this.getData()} >descending</button> */}
+        <h3>*To sorting click on respective table heading to toggle the data Ascending and Descending</h3>
+        <p>Note: contact and pincode doesn't having sort functionality</p>
+        <h3>Now Sorting the value of <span style={{color:"blue"}}>{updateValue}</span></h3>
         <div style={{overflow:"auto",padding:"20px"}}>
         <table>
               <thead>
                 <tr>
-                  <th>Sl.No</th>
-                  <th>UserName</th>
-                  <th>Email</th>
-                  <th>website</th>
-                  <th>city</th>
+                  <th >Sl.No</th>
+                  <th onClick={()=> this.getData(show ? 'asc':'desc')}>UserName</th>
+                  <th onClick={()=> this.sortMail(show ? 'asc':'desc')}>Email</th>
+                  <th onClick={()=> this.sortWeb(show ? 'asc':'desc')}>website</th>
+                  <th onClick={()=> this.sortCity(show ? 'asc':'desc')}>city</th>
                   <th>phone number</th>
                   <th>pincode</th>
                 </tr>
